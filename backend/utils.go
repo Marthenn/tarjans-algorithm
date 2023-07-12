@@ -68,3 +68,11 @@ func MakeUndirected(adjList map[string][]string) map[string][]string {
 
 	return adjList
 }
+
+func Min(a, b int) int {
+	if a < b {
+		return a
+	}
+
+	return b
+}
