@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	set "github.com/golang-collections/collections/set"
 )
 
 func LexographicCompare(a, b string) bool {
@@ -31,24 +33,23 @@ func Min(a, b string) string {
 	return b
 }
 
-func AddEdge(adjList map[string][]string, names map[string]int, a, b string) (map[string][]string, map[string]int) {
+func AddEdge(adjList map[string][]string, names *set.Set, a, b string) map[string][]string {
 	// check if b is already in a's list
 	for _, v := range adjList[a] {
 		if v == b {
-			return adjList, names
+			return adjList
 		}
 	}
 
 	adjList[a] = append(adjList[a], b)
-	names[a] = 1
-	names[b] = 1
+	names.Insert(a)
+	names.Insert(b)
 
-	return adjList, names
+	return adjList
 }
 
-func FileToAdjList(dir string) (map[string][]string, map[string]int) {
+func FileToAdjList(dir string, names *set.Set) map[string][]string {
 	adjList := make(map[string][]string)
-	names := make(map[string]int)
 
 	file, err := os.Open(dir)
 	if err != nil {
@@ -60,22 +61,22 @@ func FileToAdjList(dir string) (map[string][]string, map[string]int) {
 	for scanner.Scan() {
 		line := scanner.Text()
 		words := strings.Split(line, " ")
-		adjList, names = AddEdge(adjList, names, words[0], words[1])
+		adjList = AddEdge(adjList, names, words[0], words[1])
 	}
 
 	if err := scanner.Err(); err != nil {
 		fmt.Println(err)
 	}
 
-	return adjList, names
+	return adjList
 }
 
-func MakeUndirected(adjList map[string][]string, names map[string]int) (map[string][]string, map[string]int) {
+func MakeUndirected(adjList map[string][]string, names *set.Set) map[string][]string {
 	for k, v := range adjList {
 		for _, w := range v {
-			adjList, names = AddEdge(adjList, names, w, k)
+			adjList = AddEdge(adjList, names, w, k)
 		}
 	}
 
-	return adjList, names
+	return adjList
 }
