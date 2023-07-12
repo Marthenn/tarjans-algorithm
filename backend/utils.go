@@ -24,20 +24,24 @@ func LexographicCompare(a, b string) bool {
 	return true
 }
 
-func AddEdge(adjList map[string][]string, a, b string) map[string][]string {
-	// check if b is alread in a's list
+func AddEdge(adjList map[string][]string, names map[string]int, a, b string) (map[string][]string, map[string]int) {
+	// check if b is already in a's list
 	for _, v := range adjList[a] {
 		if v == b {
-			return adjList
+			return adjList, names
 		}
 	}
 
 	adjList[a] = append(adjList[a], b)
-	return adjList
+	names[a] = 1
+	names[b] = 1
+
+	return adjList, names
 }
 
-func FileToAdjList(dir string) map[string][]string {
+func FileToAdjList(dir string) (map[string][]string, map[string]int) {
 	adjList := make(map[string][]string)
+	names := make(map[string]int)
 
 	file, err := os.Open(dir)
 	if err != nil {
@@ -49,24 +53,24 @@ func FileToAdjList(dir string) map[string][]string {
 	for scanner.Scan() {
 		line := scanner.Text()
 		words := strings.Split(line, " ")
-		adjList = AddEdge(adjList, words[0], words[1])
+		adjList, names = AddEdge(adjList, names, words[0], words[1])
 	}
 
 	if err := scanner.Err(); err != nil {
 		fmt.Println(err)
 	}
 
-	return adjList
+	return adjList, names
 }
 
-func MakeUndirected(adjList map[string][]string) map[string][]string {
+func MakeUndirected(adjList map[string][]string, names map[string]int) (map[string][]string, map[string]int) {
 	for k, v := range adjList {
 		for _, w := range v {
-			adjList = AddEdge(adjList, w, k)
+			adjList, names = AddEdge(adjList, names, w, k)
 		}
 	}
 
-	return adjList
+	return adjList, names
 }
 
 func Min(a, b int) int {
