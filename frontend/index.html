@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lange="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Graph SCC and Bridge Finder</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <header>
+            <h1>Graph SCC and Bridge Finder</h1>
+        </header>
+
+        <main>
+            <section class = "file">
+                <form id="file-input">
+                    <label for="file">Choose a file:</label>
+                    <input type="file" id="file" name="file" accept=".txt">
+                    <button id="file-button">Confirm</button>
+                </form>
+            </section>
+
+            <section class = "display">
+                <div id="graph"></div>
+                <div id="scc"></div>
+                <div id="bridge"></div>
+            </section>
+
+            <aside class = "panel">
+                <form id = "add-edge">
+                    <label for="add-edge">Add Edge</label>
+                    <input type="text" id="add-edge-1" name="add-edge" placeholder="Source">
+                    <input type="text" id="add-edge-2" name="add-edge" placeholder="Destination">
+                    <button id="add-edge" value="Add">Add</button>
+                    <button id="clear">Clear</button>
+                </form>
+            </aside>
+        </main>
+
+        <script src="script.js"></script>
+
+    </body>
+
+</html>
