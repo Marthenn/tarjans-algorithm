@@ -1,0 +1,134 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body, input, button {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body{
+    background-color: #1746A2;
+}
+
+input, button{
+    font-size: 16px;
+    font-weight: 500;
+}
+
+header{
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #5F9DF7;
+    color: white;
+}
+
+main{
+    max-width: 800px;
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.panel{
+    float:right;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    background-color: #5F9DF7;
+    border-radius: 25px;
+    color: white;
+    width: 28%;
+    font-weight: bolder;
+    font-size: 24px;
+}
+
+.panel input{
+    padding: 5px;
+    border-radius: 15px;
+    margin-top: 15px;
+    border: none;
+    width: 95%;
+    outline: none;
+}
+
+.panel button{
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 1e31px;
+    outline: none;
+    background-color: #1746A2;
+    color: white;
+    cursor: pointer;
+}
+
+.display {
+    background-color: #5F9DF7;
+    border-radius: 25px;
+    color: white;
+    padding: 20px;
+    float: left;
+    width: 70%;
+    align-items: center;
+    min-height: 211px;
+}
+
+.file{
+    margin: 16px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #5F9DF7;
+    border-radius: 25px;
+}
+
+.file form {
+    width: 100%;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 1fr 0.25fr;
+}
+
+.file form input {
+    padding: 5px;
+    border-radius: 15px;
+    border: none;
+    outline: none;
+    width: 100%;
+    color: white;
+    font-weight: bold;
+}
+
+.file-button
+{
+    background-color: #1746A2;
+    color: white;
+    border: none;
+    border-radius: 1e31px;
+    padding: 8px;
+    font-size: 16px;
+    text-align: center;
+    font-weight: 500;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+#file-name{
+    color: white;
+    font-weight: 500;
+    margin-left: 10px;
+    margin-top: 2px;
+    font-size: 20px;
+}
