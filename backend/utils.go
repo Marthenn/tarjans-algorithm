@@ -24,6 +24,13 @@ func LexographicCompare(a, b string) bool {
 	return true
 }
 
+func Min(a, b string) string {
+	if LexographicCompare(a, b) {
+		return a
+	}
+	return b
+}
+
 func AddEdge(adjList map[string][]string, names map[string]int, a, b string) (map[string][]string, map[string]int) {
 	// check if b is already in a's list
 	for _, v := range adjList[a] {
@@ -71,12 +78,4 @@ func MakeUndirected(adjList map[string][]string, names map[string]int) (map[stri
 	}
 
 	return adjList, names
-}
-
-func Min(a, b int) int {
-	if a < b {
-		return a
-	}
-
-	return b
 }
