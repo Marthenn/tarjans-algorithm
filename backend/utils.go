@@ -7,6 +7,11 @@ import(
 	"strings"
 )
 
+func AddEdge(adjList map[string][]string, a, b string) map[string][]string{
+	adjList[a] = append(adjList[a], b)
+	return adjList
+}
+
 func FileToAdjList(dir string) map[string][]string{
 	adjList := make(map[string][]string)
 
@@ -20,7 +25,7 @@ func FileToAdjList(dir string) map[string][]string{
 	for scanner.Scan(){
 		line := scanner.Text()
 		words := strings.Split(line, " ")
-		adjList[words[0]] = append(adjList[words[0]], words[1])
+		adjList = AddEdge(adjList, words[0], words[1])
 	}
 
 	if err := scanner.Err(); err != nil {
