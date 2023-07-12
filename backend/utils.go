@@ -9,25 +9,8 @@ import (
 	set "github.com/golang-collections/collections/set"
 )
 
-func LexographicCompare(a, b string) bool {
-	// check lexographically whether a < b
-	// return true if a <= b or a is shorter than b
-
-	if len(a) < len(b) {
-		return true
-	}
-
-	for i := 0; i < len(a); i++ {
-		if a[i] > b[i] {
-			return false
-		}
-	}
-
-	return true
-}
-
-func Min(a, b string) string {
-	if LexographicCompare(a, b) {
+func Min(a, b int) int {
+	if a < b {
 		return a
 	}
 	return b
