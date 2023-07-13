@@ -17,31 +17,21 @@ type Message struct {
 }
 
 func main() {
-	router := http.NewServeMux()
-
-	router.HandleFunc("/file", FileHandler)
-	router.HandleFunc("/addEdge", AddEdgeHandler)
-
-	corsMiddleware := func(next http.Handler) http.Handler {
-		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			w.Header().Set("Access-Control-Allow-Origin", "*")
-			w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-			w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
-
-			if r.Method == "OPTIONS" {
-				w.WriteHeader(http.StatusOK)
-				return
-			}
-
-			next.ServeHTTP(w, r)
-		})
-	}
-
-	handler := corsMiddleware(router)
-	http.ListenAndServe(":8080", handler)
+	http.HandleFunc("/file", FileHandler)
+	http.HandleFunc("/addEdge", AddEdgeHandler)
+	http.ListenAndServe(":8080", nil)
 }
 
 func FileHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+		return
+	}
+
 	if r.Method != http.MethodPost {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
 		return
@@ -84,14 +74,12 @@ func FileHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(response)
-	fmt.Println(string(response))
 }
 
 func AddEdgeHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost {
-		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
-		return
-	}
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
+	fmt.Println(r.Body)
 
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -105,6 +93,8 @@ func AddEdgeHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+
+	fmt.Println(message)
 
 	if message.AdjList == nil || message.Names == nil || message.U == "" || message.V == "" {
 		http.Error(w, "Invalid request body", http.StatusBadRequest)
