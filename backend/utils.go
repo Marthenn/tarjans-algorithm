@@ -80,3 +80,23 @@ func MakeUndirected(adjList map[string][]string, names *set.Set) map[string][]st
 
 	return adjList
 }
+
+func ListToSet(list []string) *set.Set {
+	set := set.New()
+
+	for _, v := range list {
+		set.Insert(v)
+	}
+
+	return set
+}
+
+func SetToList(set *set.Set) []string {
+	list := []string{}
+
+	set.Do(func(x interface{}) {
+		list = append(list, x.(string))
+	})
+
+	return list
+}
