@@ -11,29 +11,6 @@ import (
 
 var colors_list []string = []string{"red", "blue", "green", "yellow", "orange", "purple", "pink", "brown", "black", "white"}
 
-func InitialGraph(adjList map[string][]string, names *set.Set) string {
-	// initialize the graph
-	g := graph.New(graph.StringHash, graph.Directed())
-	names.Do(func(x interface{}) {
-		g.AddVertex(x.(string))
-	})
-	for k, v := range adjList {
-		for _, w := range v {
-			g.AddEdge(k, w)
-		}
-	}
-
-	file, _ := os.Create("graph.dot")
-	_ = draw.DOT(g, file)
-
-	// return the path to the graph.dot
-	path, err := filepath.Abs("output.dot")
-	if err != nil {
-		panic(err)
-	}
-	return path
-}
-
 func OutputGraph(adjList map[string][]string, names *set.Set, low map[string]int, bridges []pair) string {
 	// low set
 	low_set := set.New()
