@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 
@@ -16,10 +17,28 @@ type Message struct {
 }
 
 func main() {
-	http.HandleFunc("/file", FileHandler)
-	http.HandleFunc("/addEdge", AddEdgeHandler)
-	port := ":8080"
-	http.ListenAndServe(port, nil)
+	router := http.NewServeMux()
+
+	router.HandleFunc("/file", FileHandler)
+	router.HandleFunc("/addEdge", AddEdgeHandler)
+
+	corsMiddleware := func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			w.Header().Set("Access-Control-Allow-Origin", "*")
+			w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+			w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
+			if r.Method == "OPTIONS" {
+				w.WriteHeader(http.StatusOK)
+				return
+			}
+
+			next.ServeHTTP(w, r)
+		})
+	}
+
+	handler := corsMiddleware(router)
+	http.ListenAndServe(":8080", handler)
 }
 
 func FileHandler(w http.ResponseWriter, r *http.Request) {
@@ -65,6 +84,7 @@ func FileHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(response)
+	fmt.Println(string(response))
 }
 
 func AddEdgeHandler(w http.ResponseWriter, r *http.Request) {
@@ -111,4 +131,5 @@ func AddEdgeHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(response)
+	fmt.Println(string(response))
 }
