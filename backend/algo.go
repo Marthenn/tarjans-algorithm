@@ -5,11 +5,6 @@ import (
 	stack "github.com/golang-collections/collections/stack"
 )
 
-type pair struct { // pair of strings
-	a string
-	b string
-}
-
 var time int // time of discovery of each vertex
 
 func tarjanDFS(u string, low map[string]int, disc map[string]int, st *stack.Stack, st_mem map[string]bool, adjList map[string][]string) {

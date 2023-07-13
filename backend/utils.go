@@ -9,6 +9,23 @@ import (
 	set "github.com/golang-collections/collections/set"
 )
 
+type pair struct { // pair of strings
+	a string
+	b string
+}
+
+func InPairList(u string, v string, list []pair) bool {
+	pair1 := pair{u, v}
+	pair2 := pair{v, u}
+
+	for _, p := range list {
+		if p == pair1 || p == pair2 {
+			return true
+		}
+	}
+	return false
+}
+
 func Min(a, b int) int {
 	if a < b {
 		return a
