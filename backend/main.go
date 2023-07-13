@@ -48,6 +48,7 @@ func FileHandler(w http.ResponseWriter, r *http.Request) {
 
 	names_set := set.New()
 	adjList := FileToAdjList(message.U, names_set)
+	InitialGraph(adjList, names_set)
 
 	message.AdjList = adjList
 	message.Names = SetToList(names_set)
