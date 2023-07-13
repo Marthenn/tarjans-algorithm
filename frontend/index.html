@@ -17,13 +17,15 @@
                 <form id="file-input">
                     <label id="file-name">No file selected</label>
                     <input type="file" id="file" name="file" accept=".txt" />
-                    <label for="file" class="file-button">Confirm</button>
+                    <label for="file" class="file-button">Select</button>
                 </form>
             </section>
 
             <section class = "display">
-                <div id="graph"></div>
-                <div id="output"></div>
+                <div id="graph">
+                    <svg id="initial-graph"></svg>
+                    <svg id="output-graph"></svg>
+                </div>
             </section>
 
             <aside class = "panel">
