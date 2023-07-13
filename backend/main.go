@@ -48,16 +48,14 @@ func FileHandler(w http.ResponseWriter, r *http.Request) {
 
 	names_set := set.New()
 	adjList := FileToAdjList(message.U, names_set)
-	InitialGraph(adjList, names_set)
 
 	low := Tarjan(adjList, names_set)
 	bridge := Bridge(adjList, names_set)
-	OutputGraph(adjList, names_set, low, bridge)
 
 	message.AdjList = adjList
 	message.Names = SetToList(names_set)
-	message.U = ""
-	message.V = ""
+	message.U = InitialGraph(adjList, names_set)
+	message.V = OutputGraph(adjList, names_set, low, bridge)
 
 	response, err := json.Marshal(message)
 	if err != nil {
@@ -99,10 +97,11 @@ func AddEdgeHandler(w http.ResponseWriter, r *http.Request) {
 
 	message.Names = SetToList(names_set)
 
-	InitialGraph(message.AdjList, names_set)
 	low := Tarjan(message.AdjList, names_set)
 	bridge := Bridge(message.AdjList, names_set)
-	OutputGraph(message.AdjList, names_set, low, bridge)
+
+	message.U = InitialGraph(message.AdjList, names_set)
+	message.V = OutputGraph(message.AdjList, names_set, low, bridge)
 
 	response, err := json.Marshal(message)
 	if err != nil {
