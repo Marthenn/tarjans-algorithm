@@ -81,8 +81,8 @@ func main() {
 	}
 
 	// execute start command to open the image
-	cmd := exec.Command("cmd", "start", "output.png")
-	err = cmd.Run()
+	cmd := exec.Command("cmd", "/c", "start", "output.png")
+	err = cmd.Start()
 	if err != nil {
 		fmt.Println("Error opening image")
 		log.Fatal(err)
