@@ -48,15 +48,8 @@ func AddEdge(adjList map[string][]string, names *set.Set, a, b string) map[strin
 	return adjList
 }
 
-func FileToAdjList(name string, names *set.Set) map[string][]string {
+func FileToAdjList(dir string, names *set.Set) map[string][]string {
 	adjList := make(map[string][]string)
-
-	dir, err := os.Getwd()
-	if err != nil {
-		fmt.Println(err)
-	}
-	dir = dir + "/tests/" + name
-	fmt.Println(dir)
 
 	file, err := os.Open(dir)
 	if err != nil {
